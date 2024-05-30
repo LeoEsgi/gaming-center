@@ -1,19 +1,22 @@
-import React, { useState } from "react";
+import ParallaxScrollView from "@/components/ParallaxScrollView";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import {
-  StyleSheet,
-  Alert,
-  View,
-  TouchableOpacity,
-  Text,
-  Platform,
-  Modal,
-  ScrollView,
-} from "react-native";
 import DateTimePicker, {
   DateTimePickerEvent,
 } from "@react-native-community/datetimepicker";
-import ParallaxScrollView from "@/components/ParallaxScrollView";
+import React, { useState } from "react";
+import {
+  Alert,
+  Image,
+  Modal,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+
+const gamingWorkstationImage = require("../../assets/images/poste2.webp");
 
 type Poste = {
   id: number;
@@ -123,6 +126,7 @@ export default function TabThreeScreen() {
             style={stylesq.poste}
             onPress={() => reserverPoste(poste)}
           >
+            <Image source={gamingWorkstationImage} style={stylesq.posteImage} />
             <Text style={stylesq.posteText}>{poste.name}</Text>
           </TouchableOpacity>
         ))}
@@ -191,18 +195,22 @@ const stylesq = StyleSheet.create({
     justifyContent: "center",
   },
   poste: {
-    width: 100,
-    height: 100,
+    width: 120,
+    height: 120,
     margin: 10,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 8,
-    borderWidth: 1,
-    backgroundColor: "#90ee90", // Default to available color
+  },
+  posteImage: {
+    width: 100,
+    height: 100,
+    resizeMode: "contain",
   },
   posteText: {
     fontSize: 16,
     fontWeight: "bold",
+    color: "#ffffff",
   },
   button: {
     margin: 20,
