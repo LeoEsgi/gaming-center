@@ -12,13 +12,13 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
-        headerShown: false,
+        headerShown: true,
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
+          title: "GC",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
               name={focused ? "home" : "home-outline"}
@@ -28,12 +28,34 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="map"
+        options={{
+          title: "Salle",
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? "map" : "map-outline"} color={color} />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
         name="explore"
         options={{
-          title: "Explore",
+          title: "Infos",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
-              name={focused ? "code-slash" : "code-slash-outline"}
+              name={focused ? "information" : "information-outline"}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="account"
+        options={{
+          title: "Compte",
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon
+              name={focused ? "person" : "person-outline"}
               color={color}
             />
           ),
