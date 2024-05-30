@@ -2,14 +2,7 @@ import ParallaxScrollView from "@/components/ParallaxScrollView";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Button, Input } from "@rneui/themed";
 import React, { useState } from "react";
-import {
-  Alert,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function TabFourScreen() {
   const [isLogin, setIsLogin] = useState(true);
@@ -18,15 +11,15 @@ export default function TabFourScreen() {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleLogin = () => {
-    Alert.alert("Login", `Email: ${email}, Password: ${password}`);
+    Alert.alert("Connexion", `Email: ${email}, Mot de passe: ${password}`);
   };
 
   const handleSignUp = () => {
     if (password !== confirmPassword) {
-      Alert.alert("Error", "Passwords do not match");
+      Alert.alert("Erreur", "Les mots de passe ne correspondent pas");
       return;
     }
-    Alert.alert("Sign Up", `Email: ${email}, Password: ${password}`);
+    Alert.alert("Inscription", `Email: ${email}, Mot de passe: ${password}`);
   };
 
   return (
@@ -41,30 +34,45 @@ export default function TabFourScreen() {
           {isLogin ? "Connexion" : "Inscription"}
         </Text>
         <Input
+          inputContainerStyle={styles.inputContainer}
+          inputStyle={styles.input}
           placeholder="Email"
           value={email}
           onChangeText={setEmail}
           autoCapitalize="none"
           keyboardType="email-address"
+          leftIcon={<Ionicons name="mail-outline" size={20} color="#cccccc" />}
         />
         <Input
+          inputContainerStyle={styles.inputContainer}
+          inputStyle={styles.input}
           placeholder="Mot de passe"
           value={password}
           onChangeText={setPassword}
           secureTextEntry
+          leftIcon={
+            <Ionicons name="lock-closed-outline" size={20} color="#cccccc" />
+          }
         />
         {!isLogin && (
           <Input
+            inputContainerStyle={styles.inputContainer}
+            inputStyle={styles.input}
             placeholder="Confirmer le mot de passe"
             value={confirmPassword}
             onChangeText={setConfirmPassword}
             secureTextEntry
+            leftIcon={
+              <Ionicons name="lock-closed-outline" size={20} color="#cccccc" />
+            }
           />
         )}
         <Button
           title={isLogin ? "Connexion" : "Inscription"}
           onPress={isLogin ? handleLogin : handleSignUp}
           buttonStyle={styles.button}
+          titleStyle={styles.buttonTitle}
+          containerStyle={styles.buttonContainer}
         />
         <TouchableOpacity
           onPress={() => setIsLogin(!isLogin)}
@@ -92,13 +100,15 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     justifyContent: "center",
+    backgroundColor: "#f5f5f5",
+    borderRadius: 10,
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: "bold",
     marginBottom: 20,
     textAlign: "center",
-    color: "#ffffff",
+    color: "#333",
   },
   button: {
     backgroundColor: "#006400",
@@ -120,6 +130,22 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     alignSelf: "center",
     width: "80%",
+  },
+  inputContainer: {
+    backgroundColor: "#fff",
+    borderRadius: 25,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    marginBottom: 10,
+    borderBottomWidth: 0,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 1,
+    elevation: 2,
+  },
+  input: {
+    color: "#333",
   },
   toggleContainer: {
     marginTop: 20,
