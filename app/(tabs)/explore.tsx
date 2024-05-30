@@ -1,11 +1,10 @@
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { StyleSheet, Image, Platform } from "react-native";
-
 import { Collapsible } from "@/components/Collapsible";
 import { ExternalLink } from "@/components/ExternalLink";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { Image, Platform, StyleSheet } from "react-native";
 
 export default function TabTwoScreen() {
   return (
@@ -19,93 +18,64 @@ export default function TabTwoScreen() {
         <ThemedText type="title">Gaming Center</ThemedText>
       </ThemedView>
       <ThemedText>
-        Bienvenue sur Gaming Center, un centre d'accueil qui met a disposition
-        le numérique pour tous.
+        Bienvenue au Gaming Center, votre espace dédié à l'exploration du monde
+        numérique et du gaming. Nous mettons à disposition des ordinateurs haut
+        de gamme et offrons des formations pour tous les niveaux, du débutant à
+        l'expert.
       </ThemedText>
-      <Collapsible title="File-based routing">
+      <Collapsible title="Notre mission">
         <ThemedText>
-          This app has two screens:{" "}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText>{" "}
-          and{" "}
-          <ThemedText type="defaultSemiBold">app/(tabs)/explore.tsx</ThemedText>
-        </ThemedText>
-        <ThemedText>
-          The layout file in{" "}
-          <ThemedText type="defaultSemiBold">app/(tabs)/_layout.tsx</ThemedText>{" "}
-          sets up the tab navigator.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/router/introduction">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Android, iOS, and web support">
-        <ThemedText>
-          You can open this project on Android, iOS, and the web. To open the
-          web version, press <ThemedText type="defaultSemiBold">w</ThemedText>{" "}
-          in the terminal running this project.
+          Notre objectif est d'offrir un accès équitable aux technologies de
+          pointe et de fournir des formations en informatique et en gaming,
+          permettant à chacun de se familiariser avec le numérique.
         </ThemedText>
       </Collapsible>
-      <Collapsible title="Images">
+      <Collapsible title="Formations disponibles">
         <ThemedText>
-          For static images, you can use the{" "}
-          <ThemedText type="defaultSemiBold">@2x</ThemedText> and{" "}
-          <ThemedText type="defaultSemiBold">@3x</ThemedText> suffixes to
-          provide files for different screen densities
+          Explorez nos différents modules de formation, allant de l'initiation à
+          l'informatique à la programmation avancée, en pass les compétences en
+          création de jeux vidéo.
+        </ThemedText>
+      </Collapsible>
+      <Collapsible title="Équipement et installations">
+        <ThemedText>
+          Nos installations comprennent des stations de jeu équipées des
+          dernières technologies, des salles de cours interactives, et des
+          espaces de travail collaboratifs adaptés à tous vos besoins
+          numériques.
         </ThemedText>
         <Image
-          source={require("@/assets/images/react-logo.png")}
-          style={{ alignSelf: "center" }}
+          source={require("@/assets/images/poste.webp")}
+          style={{
+            alignSelf: "center",
+            height: 200,
+            width: 300,
+            margin: 18,
+            borderRadius: 8,
+          }}
         />
-        <ExternalLink href="https://reactnative.dev/docs/images">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
       </Collapsible>
-      <Collapsible title="Custom fonts">
+      <Collapsible title="Rejoignez notre communauté">
         <ThemedText>
-          Open <ThemedText type="defaultSemiBold">app/_layout.tsx</ThemedText>{" "}
-          to see how to load{" "}
-          <ThemedText style={{ fontFamily: "SpaceMono" }}>
-            custom fonts such as this one.
-          </ThemedText>
+          Participez à nos événements communautaires, tournois, et workshops
+          pour rencontrer d'autres passionnés de technologie et de gaming.
+          Découvrez comment la technologie peut enrichir votre vie quotidienne
+          et professionnelle.
         </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/versions/latest/sdk/font">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
       </Collapsible>
-      <Collapsible title="Light and dark mode components">
+      <Collapsible title="Support pour tous les appareils">
         <ThemedText>
-          This template has light and dark mode support. The{" "}
-          <ThemedText type="defaultSemiBold">useColorScheme()</ThemedText> hook
-          lets you inspect what the user's current color scheme is, and so you
-          can adjust UI colors accordingly.
+          Que vous soyez sur PC, console ou mobile, notre équipe technique est
+          là pour vous soutenir. Profitez de conseils personnalisés pour tirer
+          le meilleur parti de votre équipement.
         </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
       </Collapsible>
-      <Collapsible title="Animations">
+      <Collapsible title="Programmes de mentorat">
         <ThemedText>
-          This template includes an example of an animated component. The{" "}
-          <ThemedText type="defaultSemiBold">
-            components/HelloWave.tsx
-          </ThemedText>{" "}
-          component uses the powerful{" "}
-          <ThemedText type="defaultSemiBold">
-            react-native-reanimated
-          </ThemedText>{" "}
-          library to create a waving hand animation.
+          Nos mentors sont des experts dans leurs domaines et sont là pour vous
+          guider à travers votre parcours d'apprentissage numérique, vous
+          offrant soutien et conseils à chaque étape.
         </ThemedText>
-        {Platform.select({
-          ios: (
-            <ThemedText>
-              The{" "}
-              <ThemedText type="defaultSemiBold">
-                components/ParallaxScrollView.tsx
-              </ThemedText>{" "}
-              component provides a parallax effect for the header image.
-            </ThemedText>
-          ),
-        })}
       </Collapsible>
     </ParallaxScrollView>
   );
