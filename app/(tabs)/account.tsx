@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   title: {
-    fontSize: 28,
+    fontSize: 25,
     fontWeight: "bold",
     marginBottom: 20,
     textAlign: "center",
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   buttonTitle: {
-    fontSize: 18,
+    fontSize: 15,
     fontWeight: "bold",
     color: "#fff",
   },
