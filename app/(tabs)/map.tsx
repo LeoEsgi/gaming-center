@@ -1,20 +1,8 @@
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import DateTimePicker, {
-  DateTimePickerEvent,
-} from "@react-native-community/datetimepicker";
+import DateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker";
 import React, { useState } from "react";
-import {
-  Alert,
-  Image,
-  Modal,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Alert, Image, Modal, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const gamingWorkstationImage = require("../../assets/images/poste2.webp");
 
@@ -70,7 +58,7 @@ export default function TabThreeScreen() {
 
   const reserverPoste = (poste: Poste) => {
     setSelectedPoste(poste);
-    setShow(true); // Show date picker
+    setShow(true);
   };
 
   const isAvailable = (posteId: number, date: string, hour: number) => {
@@ -119,59 +107,65 @@ export default function TabThreeScreen() {
         <Ionicons size={310} name="code-slash" style={styles.headerImage} />
       }
     >
-      <View style={stylesq.map}>
-        {postes.map((poste) => (
-          <TouchableOpacity
-            key={poste.id}
-            style={stylesq.poste}
-            onPress={() => reserverPoste(poste)}
-          >
-            <Image source={gamingWorkstationImage} style={stylesq.posteImage} />
-            <Text style={stylesq.posteText}>{poste.name}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-      {show && (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={date}
-          mode={mode}
-          is24Hour={true}
-          display="default"
-          onChange={onChangeDate}
-        />
-      )}
-      <Modal
-        visible={showTimeModal}
-        transparent={true}
-        animationType="slide"
-        onRequestClose={() => setShowTimeModal(false)}
-      >
-        <View style={stylesq.modalContainer}>
-          <View style={stylesq.modalContent}>
-            <ScrollView>
-              <Text style={stylesq.modalTitle}>Sélectionnez une heure</Text>
-              {validHours.map((hour) => (
-                <TouchableOpacity
-                  key={hour}
-                  style={stylesq.hourButton}
-                  onPress={() => onTimeSelect(hour)}
-                >
-                  <Text style={stylesq.hourButtonText}>{`${hour}:00`}</Text>
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
-          </View>
+      <View style={stylesq.container}>
+        <Text style={stylesq.title}>Réservation des Postes</Text>
+        <View style={stylesq.map}>
+          {postes.map((poste) => (
+            <TouchableOpacity
+              key={poste.id}
+              style={stylesq.poste}
+              onPress={() => reserverPoste(poste)}
+            >
+              <Image
+                source={gamingWorkstationImage}
+                style={stylesq.posteImage}
+              />
+              <Text style={stylesq.posteText}>{poste.name}</Text>
+            </TouchableOpacity>
+          ))}
         </View>
-      </Modal>
-      {selectedPoste && !show && !showTimeModal && (
-        <TouchableOpacity
-          style={stylesq.button}
-          onPress={() => setShowTimeModal(true)}
+        {show && (
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={date}
+            mode={mode}
+            is24Hour={true}
+            display="default"
+            onChange={onChangeDate}
+          />
+        )}
+        <Modal
+          visible={showTimeModal}
+          transparent={true}
+          animationType="slide"
+          onRequestClose={() => setShowTimeModal(false)}
         >
-          <Text style={stylesq.buttonText}>Sélectionner l'heure</Text>
-        </TouchableOpacity>
-      )}
+          <View style={stylesq.modalContainer}>
+            <View style={stylesq.modalContent}>
+              <ScrollView>
+                <Text style={stylesq.modalTitle}>Sélectionnez une heure</Text>
+                {validHours.map((hour) => (
+                  <TouchableOpacity
+                    key={hour}
+                    style={stylesq.hourButton}
+                    onPress={() => onTimeSelect(hour)}
+                  >
+                    <Text style={stylesq.hourButtonText}>{`${hour}:00`}</Text>
+                  </TouchableOpacity>
+                ))}
+              </ScrollView>
+            </View>
+          </View>
+        </Modal>
+        {selectedPoste && !show && !showTimeModal && (
+          <TouchableOpacity
+            style={stylesq.button}
+            onPress={() => setShowTimeModal(true)}
+          >
+            <Text style={stylesq.buttonText}>Sélectionner l'heure</Text>
+          </TouchableOpacity>
+        )}
+      </View>
     </ParallaxScrollView>
   );
 }
@@ -179,14 +173,14 @@ export default function TabThreeScreen() {
 const stylesq = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    backgroundColor: "#fff",
+    padding: 5,
   },
   title: {
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: "bold",
     marginBottom: 20,
     textAlign: "center",
+    color: "#fff8f8",
   },
   map: {
     flex: 1,
@@ -196,21 +190,30 @@ const stylesq = StyleSheet.create({
   },
   poste: {
     width: 120,
-    height: 120,
+    height: 140,
     margin: 10,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 8,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#ddd",
+    backgroundColor: "#fff",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   posteImage: {
     width: 100,
-    height: 100,
+    height: 80,
     resizeMode: "contain",
   },
   posteText: {
     fontSize: 16,
     fontWeight: "bold",
-    color: "#ffffff",
+    color: "#333",
+    marginTop: 5,
   },
   button: {
     margin: 20,
