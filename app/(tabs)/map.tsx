@@ -1,14 +1,29 @@
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import DateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker";
-import React, { useState } from "react";
-import { Alert, Image, Modal, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-
-const gamingWorkstationImage = require("../../assets/images/poste2.webp");
+import DateTimePicker, {
+  DateTimePickerEvent,
+} from "@react-native-community/datetimepicker";
+import React, { useMemo, useState } from "react";
+import {
+  Alert,
+  Image,
+  ImageBackground,
+  Modal,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 type Poste = {
   id: number;
   name: string;
+  x: number;
+  y: number;
+  status?: "available" | "unavailable";
 };
 
 type Reservation = {
@@ -18,18 +33,40 @@ type Reservation = {
   endTime: number;
 };
 
+const yBase = 270;
+const xBase = 150;
+
 const postes: Poste[] = [
-  { id: 1, name: "Poste 1" },
-  { id: 2, name: "Poste 2" },
-  { id: 3, name: "Poste 3" },
-  { id: 4, name: "Poste 4" },
-  { id: 5, name: "Poste 5" },
-  { id: 6, name: "Poste 6" },
-  { id: 7, name: "Poste 7" },
-  { id: 8, name: "Poste 8" },
+  { id: 1, name: "1", x: xBase, y: yBase, status: "available" },
+  { id: 2, name: "2", x: xBase + 40, y: yBase, status: "unavailable" },
+  { id: 3, name: "3", x: xBase, y: yBase + 40, status: "available" },
+  { id: 4, name: "4", x: xBase + 40, y: yBase + 40, status: "available" },
+  { id: 5, name: "5", x: xBase, y: yBase + 80, status: "available" },
+  { id: 6, name: "6", x: xBase + 40, y: yBase + 80, status: "available" },
+  {
+    id: 7,
+    name: "7",
+    x: xBase + 40,
+    y: yBase - 230,
+    status: "available",
+  },
+  {
+    id: 8,
+    name: "8",
+    x: xBase - 130,
+    y: yBase + 50,
+    status: "available",
+  },
+  {
+    id: 9,
+    name: "9",
+    x: xBase + 150,
+    y: yBase - 240,
+    status: "unavailable",
+  },
 ];
 
-const validHours = Array.from({ length: 13 }, (_, i) => i + 8); // Array of hours from 8 to 20
+const validHours = Array.from({ length: 13 }, (_, i) => i + 8);
 
 export default function TabThreeScreen() {
   const [selectedPoste, setSelectedPoste] = useState<Poste | null>(null);
@@ -38,6 +75,9 @@ export default function TabThreeScreen() {
   const [show, setShow] = useState(false);
   const [showTimeModal, setShowTimeModal] = useState(false);
   const [reservations, setReservations] = useState<Reservation[]>([]);
+  const [filter, setFilter] = useState("");
+  const [filterStatus, setFilterStatus] = useState("");
+  const [isFilterModalVisible, setFilterModalVisible] = useState(false);
 
   const onChangeDate = (event: DateTimePickerEvent, selectedDate?: Date) => {
     const currentDate = selectedDate || date;
@@ -100,29 +140,68 @@ export default function TabThreeScreen() {
     }
   };
 
+  const filteredPostes = useMemo(() => {
+    if (!filter && !filterStatus) return postes;
+    return postes.filter((poste) => {
+      if (filter && !poste.name.toLowerCase().includes(filter.toLowerCase())) {
+        return false;
+      }
+      if (filterStatus && poste.status !== filterStatus) {
+        return false;
+      }
+      return true;
+    });
+  }, [filter, postes, filterStatus]);
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
-      headerImage={
-        <Ionicons size={310} name="code-slash" style={styles.headerImage} />
-      }
+      headerImage={<Ionicons size={310} name="code-slash" />}
+      noPadding={true}
     >
-      <View style={stylesq.container}>
-        <Text style={stylesq.title}>Réservation des Postes</Text>
-        <View style={stylesq.map}>
-          {postes.map((poste) => (
-            <TouchableOpacity
-              key={poste.id}
-              style={stylesq.poste}
-              onPress={() => reserverPoste(poste)}
-            >
-              <Image
-                source={gamingWorkstationImage}
-                style={stylesq.posteImage}
-              />
-              <Text style={stylesq.posteText}>{poste.name}</Text>
-            </TouchableOpacity>
-          ))}
+      <View style={style.filters}>
+        <TextInput
+          style={style.searchBar}
+          onChangeText={setFilter}
+          placeholder="Rechercher un espace"
+        />
+        <TouchableOpacity
+          style={[
+            style.filterButton,
+            filterStatus ? style.filterButtonActive : {},
+          ]}
+          onPress={() => setFilterModalVisible(true)}
+        >
+          <Text>Filtres</Text>
+          {filterStatus && (
+            <Ionicons name="checkmark-circle" size={20} color="green" />
+          )}
+        </TouchableOpacity>
+      </View>
+      <View style={style.container}>
+        <Text style={style.title}>Réservation des Postes</Text>
+        <View style={style.map}>
+          <ImageBackground
+            source={require("../../assets/images/floor.webp")}
+            style={style.floorPlan}
+            resizeMode="cover"
+          >
+            {filteredPostes.map((poste) => (
+              <TouchableOpacity
+                key={poste.id}
+                style={[
+                  style.poste,
+                  { left: poste.x, top: poste.y },
+                  poste.status === "unavailable"
+                    ? { backgroundColor: "#ff0000" }
+                    : {},
+                ]}
+                onPress={() => reserverPoste(poste)}
+              >
+                <Text style={style.posteText}>{poste.name}</Text>
+              </TouchableOpacity>
+            ))}
+          </ImageBackground>
         </View>
         {show && (
           <DateTimePicker
@@ -140,17 +219,17 @@ export default function TabThreeScreen() {
           animationType="slide"
           onRequestClose={() => setShowTimeModal(false)}
         >
-          <View style={stylesq.modalContainer}>
-            <View style={stylesq.modalContent}>
+          <View style={style.modalContainer}>
+            <View style={style.modalContent}>
               <ScrollView>
-                <Text style={stylesq.modalTitle}>Sélectionnez une heure</Text>
+                <Text style={style.modalTitle}>Sélectionnez une heure</Text>
                 {validHours.map((hour) => (
                   <TouchableOpacity
                     key={hour}
-                    style={stylesq.hourButton}
+                    style={style.hourButton}
                     onPress={() => onTimeSelect(hour)}
                   >
-                    <Text style={stylesq.hourButtonText}>{`${hour}:00`}</Text>
+                    <Text style={style.hourButtonText}>{`${hour}:00`}</Text>
                   </TouchableOpacity>
                 ))}
               </ScrollView>
@@ -159,28 +238,79 @@ export default function TabThreeScreen() {
         </Modal>
         {selectedPoste && !show && !showTimeModal && (
           <TouchableOpacity
-            style={stylesq.button}
+            style={style.button}
             onPress={() => setShowTimeModal(true)}
           >
-            <Text style={stylesq.buttonText}>Sélectionner l'heure</Text>
+            <Text style={style.buttonText}>Sélectionner l'heure</Text>
           </TouchableOpacity>
         )}
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={isFilterModalVisible}
+          onRequestClose={() => setFilterModalVisible(false)}
+        >
+          <View style={style.modalView}>
+            <Text style={style.modalText}>Choisissez vos filtres :</Text>
+
+            <TouchableOpacity
+              style={[
+                style.filterOption,
+                filterStatus === "available"
+                  ? { backgroundColor: "#089708" }
+                  : {},
+              ]}
+              onPress={() => {
+                if (filterStatus === "available") {
+                  setFilterStatus("");
+                } else {
+                  setFilterStatus("available");
+                }
+              }}
+            >
+              <Text style={style.filterText}>Disponible</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[
+                style.filterOption,
+                filterStatus === "unavailable"
+                  ? { backgroundColor: "#089708" }
+                  : {},
+              ]}
+              onPress={() => {
+                if (filterStatus === "unavailable") {
+                  setFilterStatus("");
+                } else {
+                  setFilterStatus("unavailable");
+                }
+              }}
+            >
+              <Text style={style.filterText}>Indisponible</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={style.buttonClose}
+              onPress={() => setFilterModalVisible(false)}
+            >
+              <Text style={style.textStyle}>Fermer</Text>
+            </TouchableOpacity>
+          </View>
+        </Modal>
       </View>
     </ParallaxScrollView>
   );
 }
 
-const stylesq = StyleSheet.create({
+const style = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 5,
   },
   title: {
     fontSize: 26,
     fontWeight: "bold",
     marginBottom: 20,
     textAlign: "center",
-    color: "#fff8f8",
+    color: "#ffffff",
   },
   map: {
     flex: 1,
@@ -188,32 +318,58 @@ const stylesq = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "center",
   },
+  floorPlan: {
+    flex: 1,
+    width: "100%",
+    height: 450,
+  },
   poste: {
-    width: 120,
-    height: 140,
-    margin: 10,
+    position: "absolute",
+    width: 30,
+    height: 30,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 10,
+    backgroundColor: "#008000", // Green for available
+    borderRadius: 15,
     borderWidth: 1,
-    borderColor: "#ddd",
-    backgroundColor: "#fff",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    borderColor: "#ffffff",
   },
-  posteImage: {
-    width: 100,
-    height: 80,
-    resizeMode: "contain",
+  filterButtonActive: {
+    backgroundColor: "#4CAF50",
   },
   posteText: {
-    fontSize: 16,
+    fontSize: 13,
     fontWeight: "bold",
-    color: "#333",
-    marginTop: 5,
+    color: "#ffffff",
+    position: "absolute",
+    top: "30%",
+    left: "90%",
+    transform: [{ translateX: -15 }, { translateY: -4 }],
+  },
+  filters: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: 10,
+    marginBottom: 20,
+  },
+  searchBar: {
+    flex: 1,
+    height: 40,
+    borderWidth: 1,
+    borderColor: "#727070",
+    borderRadius: 20,
+    paddingLeft: 15,
+    backgroundColor: "#bbbaba",
+    marginRight: 10,
+  },
+  filterButton: {
+    width: 100,
+    backgroundColor: "#bbbaba",
+    borderColor: "#727070",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 20,
+    height: 40,
   },
   button: {
     margin: 20,
@@ -230,7 +386,7 @@ const stylesq = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0,0,0,0.5)",
+    backgroundColor: "rgba(212, 209, 209, 0.5)",
   },
   modalContent: {
     width: 300,
@@ -256,17 +412,48 @@ const stylesq = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
   },
-});
-
-const styles = StyleSheet.create({
-  headerImage: {
-    color: "#808080",
-    bottom: -90,
-    left: -35,
-    position: "absolute",
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
   },
-  titleContainer: {
-    flexDirection: "row",
-    gap: 8,
+  filterOption: {
+    backgroundColor: "#f8f8f8",
+    padding: 10,
+    marginTop: 16,
+    width: 200,
+    alignItems: "center",
+    borderRadius: 10,
+  },
+  filterText: {
+    fontSize: 16,
+    color: "#333",
+  },
+  buttonClose: {
+    backgroundColor: "#c2c2c27e",
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+    marginTop: 25,
+    width: 200,
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
   },
 });
