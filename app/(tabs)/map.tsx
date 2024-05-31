@@ -196,7 +196,10 @@ export default function TabThreeScreen() {
                     ? { backgroundColor: "#ff0000" }
                     : {},
                 ]}
-                onPress={() => reserverPoste(poste)}
+                onPress={() => {
+                  if (poste.status === "available") reserverPoste(poste);
+                  else Alert.alert(`Poste ${poste.name} est indisponible`);
+                }}
               >
                 <Text style={style.posteText}>{poste.name}</Text>
               </TouchableOpacity>
@@ -226,7 +229,16 @@ export default function TabThreeScreen() {
                 {validHours.map((hour) => (
                   <TouchableOpacity
                     key={hour}
-                    style={style.hourButton}
+                    style={[
+                      style.hourButton,
+                      isAvailable(
+                        selectedPoste?.id || 0,
+                        date.toLocaleDateString(),
+                        hour
+                      )
+                        ? {}
+                        : { backgroundColor: "#ff0000" },
+                    ]}
                     onPress={() => onTimeSelect(hour)}
                   >
                     <Text style={style.hourButtonText}>{`${hour}:00`}</Text>
