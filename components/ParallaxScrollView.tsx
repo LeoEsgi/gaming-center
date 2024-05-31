@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     padding: 32,
-    paddingTop: 56,
+    paddingTop: 36,
     gap: 16,
     overflow: "hidden",
   },

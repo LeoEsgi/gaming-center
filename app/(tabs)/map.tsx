@@ -1,22 +1,8 @@
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import DateTimePicker, {
-  DateTimePickerEvent,
-} from "@react-native-community/datetimepicker";
+import DateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker";
 import React, { useMemo, useState } from "react";
-import {
-  Alert,
-  Image,
-  ImageBackground,
-  Modal,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Alert, Image, ImageBackground, Modal, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 type Poste = {
   id: number;
@@ -362,14 +348,13 @@ const style = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     padding: 10,
-    marginBottom: 20,
   },
   searchBar: {
     flex: 1,
     height: 40,
     borderWidth: 1,
     borderColor: "#727070",
-    borderRadius: 20,
+    borderRadius: 10,
     paddingLeft: 15,
     backgroundColor: "#bbbaba",
     marginRight: 10,
@@ -380,7 +365,7 @@ const style = StyleSheet.create({
     borderColor: "#727070",
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 20,
+    borderRadius: 10,
     height: 40,
   },
   button: {
