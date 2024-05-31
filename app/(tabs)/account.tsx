@@ -25,9 +25,7 @@ export default function TabFourScreen() {
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
-      headerImage={
-        <Ionicons size={310} name="code-slash" style={styles.headerImage} />
-      }
+      headerImage={<Ionicons size={310} name="code-slash" />}
     >
       <View style={styles.container}>
         <Text style={styles.title}>
@@ -74,6 +72,23 @@ export default function TabFourScreen() {
           titleStyle={styles.buttonTitle}
           containerStyle={styles.buttonContainer}
         />
+        <TouchableOpacity style={styles.orContainer}>
+          <Text style={styles.orText}>ou</Text>
+        </TouchableOpacity>
+        <Button
+          title=" Continuer avec Google"
+          buttonStyle={styles.buttonGoogle}
+          titleStyle={styles.buttonGoogleTitle}
+          containerStyle={styles.buttonGoogleContainer}
+          icon={
+            <Ionicons
+              name="logo-google"
+              size={20}
+              color="#fff"
+              style={styles.icon}
+            />
+          }
+        />
         <TouchableOpacity
           onPress={() => setIsLogin(!isLogin)}
           style={styles.toggleContainer}
@@ -90,31 +105,20 @@ export default function TabFourScreen() {
 }
 
 const styles = StyleSheet.create({
-  headerImage: {
-    color: "#808080",
-    bottom: -90,
-    left: -35,
-    position: "absolute",
-  },
   container: {
     flex: 1,
-    padding: 20,
-    justifyContent: "center",
-    backgroundColor: "#f5f5f5",
-    borderRadius: 10,
   },
   title: {
+    color: "#fff",
     fontSize: 25,
     fontWeight: "bold",
-    marginBottom: 20,
-    textAlign: "center",
-    color: "#333",
+    marginBottom: 40,
   },
   button: {
     backgroundColor: "#006400",
     paddingVertical: 15,
     paddingHorizontal: 20,
-    borderRadius: 25,
+    borderRadius: 10,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
@@ -128,15 +132,15 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginVertical: 10,
-    alignSelf: "center",
-    width: "80%",
+    marginLeft: 10,
+    width: "94%",
   },
   inputContainer: {
     backgroundColor: "#fff",
-    borderRadius: 25,
+    borderRadius: 10,
     paddingHorizontal: 10,
-    paddingVertical: 5,
-    marginBottom: 10,
+    paddingVertical: 2,
+    marginBottom: 2,
     borderBottomWidth: 0,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
@@ -146,13 +150,44 @@ const styles = StyleSheet.create({
   },
   input: {
     color: "#333",
+    fontSize: 16,
   },
   toggleContainer: {
     marginTop: 20,
-    alignItems: "center",
   },
   toggleText: {
     color: "#006400",
-    fontSize: 16,
+    fontSize: 14,
+    marginLeft: 10,
+  },
+  orContainer: {
+    marginTop: 20,
+  },
+  orText: {
+    color: "#ffffff67",
+    textAlign: "center",
+  },
+  buttonGoogle: {
+    backgroundColor: "transparent",
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#ffffff2f",
+  },
+  buttonGoogleTitle: {
+    fontSize: 15,
+    fontWeight: "bold",
+    color: "#fff",
+  },
+  buttonGoogleContainer: {
+    marginVertical: 10,
+    marginTop: 20,
+    marginLeft: 10,
+    width: "94%",
+  },
+  icon: {
+    position: "absolute",
+    left: 18,
   },
 });
