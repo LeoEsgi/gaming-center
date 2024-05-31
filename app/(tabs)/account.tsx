@@ -132,8 +132,8 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginVertical: 10,
-    marginLeft: 10,
-    width: "94%",
+    paddingRight: 10,
+    paddingLeft: 10,
   },
   inputContainer: {
     backgroundColor: "#fff",
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
   toggleText: {
     color: "#006400",
     fontSize: 14,
-    marginLeft: 10,
+    paddingLeft: 12,
   },
   orContainer: {
     marginTop: 20,
@@ -183,8 +183,8 @@ const styles = StyleSheet.create({
   buttonGoogleContainer: {
     marginVertical: 10,
     marginTop: 20,
-    marginLeft: 10,
-    width: "94%",
+    paddingRight: 10,
+    paddingLeft: 10,
   },
   icon: {
     position: "absolute",

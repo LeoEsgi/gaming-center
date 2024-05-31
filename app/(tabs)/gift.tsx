@@ -4,7 +4,15 @@ import { ThemedView } from "@/components/ThemedView";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import LottieView from "lottie-react-native";
 import React, { useRef, useState } from "react";
-import { Alert, Animated, Easing, Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import {
+  Alert,
+  Animated,
+  Easing,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import Modal from "react-native-modal";
 
 export default function TabFiveScreen() {
@@ -149,11 +157,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 20,
     overflow: "hidden",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 5,
   },
   giftImage: {
     width: "100%",
