@@ -48,6 +48,19 @@ export default function TabLayout() {
           ),
         }}
       />
+
+      <Tabs.Screen
+        name="gift"
+        options={{
+          title: "Mystere",
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon
+              name={focused ? "gift" : "gift-outline"}
+              color={color}
+            />
+          ),
+        }}
+      />
       <Tabs.Screen
         name="account"
         options={{
